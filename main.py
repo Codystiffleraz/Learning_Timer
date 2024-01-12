@@ -4,8 +4,10 @@ import math
 import random
 from playsound import playsound
 
-minutes = 10
+minutes = .05
+seconds = minutes * 60
 timer_ = None
+meditate = 10
 MAX_TIMES = 120
 MIN_TIMES = 200
 
@@ -15,7 +17,9 @@ def reset_timer():
     timer.config(text='Timer', fg='green')
 
 def start_timer():
-    seconds = minutes * 60
+    global seconds
+    global meditate
+    meditate = 10
     if seconds == 0:
         canvas.itemconfig(timer_text, text="Finished")
     elif seconds < MIN_TIMES:
@@ -39,9 +43,19 @@ def timer_countdown(count):
         global timer_
         timer_ =  window.after(1000, timer_countdown, count - 1)
     else:
+        playsound('boop.mp3')   
+        runoff()
+
+def runoff():
+    global meditate
+    canvas.itemconfig(timer_text, text=f"0:{meditate}")
+    if meditate > 0:
+        timer_ =  window.after(1000, timer_countdown, meditate - 1)
+        meditate = 0
+    else:
         start_timer()
-    
-    
+
+        
 window = Tk()
 
 window.config(padx=100, pady=50, bg='green')

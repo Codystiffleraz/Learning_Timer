@@ -8,3 +8,9 @@ Add a 10-15 second countdown after the timer is up
 Add an input for minutes and have the program run on that
 Fix UI and Layout
 """
+mins = 10
+
+def runoff(med=10, count):
+    if count > 0:
+        global timer_
+        timer_ =  window.after(1000, timer_countdown, count - 1)
