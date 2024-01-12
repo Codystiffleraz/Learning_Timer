@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 import math
 import random
+from playsound import playsound
 
 minutes = 10
 timer_ = None
@@ -15,7 +16,15 @@ def reset_timer():
 
 def start_timer():
     seconds = minutes * 60
-    timer_countdown(seconds)
+    if seconds == 0:
+        canvas.itemconfig(timer_text, text="Finished")
+    elif seconds < MIN_TIMES:
+        timer_countdown(seconds)
+        seconds = 0
+    else:
+        r = random.randint(MAX_TIMES, round(MIN_TIMES))
+        seconds -= r
+        timer_countdown(r)
     
     
 def timer_countdown(count):
